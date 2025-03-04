@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Core\E-Commerce-API.Core.csproj" />
+    <ProjectReference Include="..\E-Commerce-API.Core\E-Commerce-API.Core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
