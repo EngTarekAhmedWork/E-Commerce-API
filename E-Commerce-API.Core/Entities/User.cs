@@ -10,4 +10,8 @@ public class User
     public string Address { get; set; }
     public DateTime BirthDay { get; set; }
     public string Role { get; set; }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
