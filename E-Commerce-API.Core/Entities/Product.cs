@@ -8,11 +8,4 @@ public class Product
     public int ProductPrice { get; set; }
     public int CategoryId { get; set; }
     public Category? Category { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
 }
-=======
-}
->>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad

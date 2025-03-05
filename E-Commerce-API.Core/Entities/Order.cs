@@ -8,11 +8,4 @@ public class Order
     public int OrderPrice { get; set; }
     public int UserId { get; set; }
     public User? User { get; set; }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
 }
-=======
-}
->>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
