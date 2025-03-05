@@ -11,6 +11,9 @@ public class User
     public DateTime BirthDay { get; set; }
     public string Role { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
 }
 =======
 }

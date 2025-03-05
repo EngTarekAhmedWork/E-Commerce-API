@@ -7,6 +7,9 @@ public class Category
     public string Description { get; set; }
     public List<Product>? Products { get; set; }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 763c85d06ea0115cb0bfc9b5b98b5fa07fdc81ad
 }
 =======
 }
