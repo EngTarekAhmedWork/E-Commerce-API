@@ -7,11 +7,12 @@ namespace E_Commerce_API.Infrastructure.Repositories;
 public class UnitOfWork : IUnitOfWork
 {
     private readonly ApplicationDbContex _context;
-    public ICategoryRepository Category {  get; set; }
-    public IProductRepository Product { get; set; }
-    public IOrderRepository Order { get; set; }
-    public IOrderDetailsRepository OrderDetails { get; set; }
-    public IUserRepository User { get; set; }
+
+    public ICategoryRepository Category { get; }
+    public IProductRepository Product { get; }
+    public IOrderRepository Order { get; }
+    public IOrderDetailsRepository OrderDetails { get; }
+    public IUserRepository User { get; }
 
     public UnitOfWork(ApplicationDbContex context)
     {
@@ -23,9 +24,9 @@ public class UnitOfWork : IUnitOfWork
         User = new UserRepository(context);
     }
 
-    public int Complete()
+    public async Task<int> CompleteAsync()
     {
-        return _context.SaveChanges();
+        return await _context.SaveChangesAsync();
     }
 
     public void Dispose()

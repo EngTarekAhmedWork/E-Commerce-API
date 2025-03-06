@@ -8,5 +8,5 @@ public interface IUnitOfWork : IDisposable
     IOrderDetailsRepository OrderDetails { get; }
     IUserRepository User { get; }
 
-    int Complete();
+    Task<int> CompleteAsync();
 }

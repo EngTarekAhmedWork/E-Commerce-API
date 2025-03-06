@@ -68,4 +68,67 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         _dbSet.RemoveRange(items);
     }
+
+    public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, string? includeEntities = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (predicate != null)
+        {
+            query = query.Where(predicate);
+        }
+
+        if (includeEntities != null)
+        {
+            foreach (var include in includeEntities.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(include.Trim());
+            }
+        }
+
+        return await query.ToListAsync();
+    }
+
+    public async Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? predicate = null, string? includeEntities = null)
+    {
+        IQueryable<T> query = _dbSet;
+
+        if (predicate != null)
+        {
+            query = query.Where(predicate);
+        }
+
+        if (includeEntities != null)
+        {
+            foreach (var include in includeEntities.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(include.Trim());
+            }
+        }
+
+        return await query.FirstOrDefaultAsync();
+    }
+
+    public async Task AddAsync(T item)
+    {
+        await _dbSet.AddAsync(item);
+    }
+
+    public async Task UpdateAsync(T item)
+    {
+        _dbSet.Update(item);
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteAsync(T item)
+    {
+        _dbSet.Remove(item);
+        await Task.CompletedTask;
+    }
+
+    public async Task DeleteRangeAsync(IEnumerable<T> items)
+    {
+        _dbSet.RemoveRange(items);
+        await Task.CompletedTask;
+    }
 }
