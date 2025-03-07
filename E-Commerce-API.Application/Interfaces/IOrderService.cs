@@ -9,11 +9,9 @@ namespace E_Commerce_API.Core.Interfaces
 {
     public interface IOrderService 
     {
-        Task<List<Order>> GetAllOrderAsync();
-        Task<Order> GetByIdOrderAsync(int Id);
-        Task<Order> CreateOrderDetailsAsync(Order order);
-
-        Task<Order> UpdateOrderDetailsAsync(Order order, int Id);
-        Task<Order> DeleteOrderDetailsAsync(int Id);
+        Task<IEnumerable<Order>> GetAllOrderAsync();
+        Task CreateOrderAsync(Order order);
+        Task DeleteOrderAsync(int Id);
+        Task UpdateOrderAsync(int Id,Order order);
     }
 }

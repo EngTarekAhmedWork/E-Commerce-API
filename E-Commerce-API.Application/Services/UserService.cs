@@ -1,0 +1,68 @@
+﻿using E_Commerce_API.Application.Interfaces;
+using E_Commerce_API.Core.Entities;
+using E_Commerce_API.Core.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace E_Commerce_API.Application.Services
+{
+    public class UserService : IUserService
+    {
+        private readonly IUserRepository _userRepository;
+
+        public UserService(IUserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+        public async Task DeleteAsync(int id)
+        {
+            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            await _userRepository.DeleteAsync(result);
+        }
+
+        public async Task<IEnumerable<User>> GetAllUsersAsync()
+        {
+            return await _userRepository.GetAllAsync();
+        }
+
+        public async Task<User> GetByIdAsync(int id)
+        {
+            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return result;
+        }
+
+        public async Task LoginAsync(User user)
+        {
+            var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x=> x.UserName == user.UserName && x.Password == user.Password);
+            if (LoginUser.UserName != user.UserName && LoginUser.Password != user.Password) 
+            {
+                Console.Write("User Or Password Incorrect");
+            }
+
+            Console.Write("Welecom To Our Store");
+        }
+                 
+        
+
+        public async Task RegisterAsync(User user)
+        {
+            await _userRepository.AddAsync(user);
+        }
+
+        public async Task UpdateAsync(int Id, User user)
+        {
+            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == Id);
+            result.UserName = user.UserName;
+            result.Email = user.Email;
+            result.Password = user.Password;
+            result.PhoneNumber = user.PhoneNumber;
+            result.BirthDay = user.BirthDay;
+            result.Address = user.Address;
+            result.Role = user.Role;
+            await _userRepository.UpdateAsync(result);
+        }
+    }
+}

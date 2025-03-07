@@ -4,9 +4,8 @@ namespace E_Commerce_API.Application.Services;
 
 public interface IOrderDetailsService
 {
-    Task<List<OrderDetails>> GetOrderDetailsAsync();
-    Task<OrderDetails> GetByIdOrderDetailsAsync(int Id);
-    Task<OrderDetails> CreateOrderDetailsAsync(OrderDetails orderDetails);
-    Task<OrderDetails> UpdateOrderDetailsAsync(OrderDetails orderDetails, int Id);
-    Task<OrderDetails> DeleteOrderDetailsAsync(int Id);
+    Task<IEnumerable<OrderDetails>> GetAllOrderDetailsAsync();
+    Task CreateOrderDetailsAsync(OrderDetails orderDetails);
+    Task DeleteOrderDetailsAsync(int Id);
+    Task UpdateOrderDetailsAsync(int Id,OrderDetails orderDetails);
 }

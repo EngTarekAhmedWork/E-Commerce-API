@@ -11,42 +11,37 @@ namespace E_Commerce_API.Application.Services
     public class OrderService : IOrderService
     {
         private readonly IOrderRepository _orderRepository;
-        
 
-        public OrderService(IOrderRepository orderRepository )
+
+        public OrderService(IOrderRepository orderRepository)
         {
             _orderRepository = orderRepository;
-            
+
         }
 
-        public async Task<Order> CreateOrderDetailsAsync(Order order)
+        public async Task CreateOrderAsync(Order order)
         {
-            throw new NotImplementedException();
+            await _orderRepository.AddAsync(order);
         }
 
-        public async Task<Order> DeleteOrderDetailsAsync(int Id)
+        public async Task DeleteOrderAsync(int Id)
         {
             var result = await _orderRepository.GetFirstOrDefaultAsync(x => x.Id == Id);
-            await _orderRepository.DeleteAsync(result);
-            return result;
-
+            _orderRepository.Delete(result);
         }
 
-        public async Task<Order> GetByIdOrderAsync(int Id)
-        {
-            var result = await _orderRepository.GetFirstOrDefaultAsync(o => o.Id == Id);
-            //
-        }
-
-        public async Task<List<Order>> GetAllOrderAsync()
+        public async Task<IEnumerable<Order>> GetAllOrderAsync()
         {
             return await _orderRepository.GetAllAsync();
         }
 
-        
-        public Task<Order> UpdateOrderDetailsAsync(Order order, int Id)
+        public async Task UpdateOrderAsync(int Id, Order order)
         {
-            throw new NotImplementedException();
+            var result = await _orderRepository.GetFirstOrDefaultAsync(x => x.Id == Id);
+            result.OrderStatus = order.OrderStatus;
+            result.OrderPrice = order.OrderPrice;
+            result.UserId = order.UserId;
+            await _orderRepository.UpdateAsync(result);
         }
     }
 }
