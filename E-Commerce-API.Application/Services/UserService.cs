@@ -34,18 +34,34 @@ namespace E_Commerce_API.Application.Services
             return result;
         }
 
-        public async Task LoginAsync(User user)
-        {
-            var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x=> x.UserName == user.UserName && x.Password == user.Password);
-            if (LoginUser.UserName != user.UserName && LoginUser.Password != user.Password) 
-            {
-                Console.Write("User Or Password Incorrect");
-            }
+        #region Old Login
+        //public async Task LoginAsync(User user)
+        //{
+        //    var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x=> x.UserName == user.UserName && x.Password == user.Password);
+        //    if (LoginUser.UserName != user.UserName && LoginUser.Password != user.Password) 
+        //    {
+        //        Console.Write("User Or Password Incorrect");
+        //    }
 
-            Console.Write("Welecom To Our Store");
+        //    Console.Write("Welecom To Our Store");
+        //}
+        #endregion
+
+        // New Login
+        public async Task<string> LoginAsync(string UserName, string Password)
+        {
+            var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x => x.UserName == UserName);
+            if (LoginUser != null)
+            {
+                if ( LoginUser.Password == Password)
+                {
+                    // Login logic must added here
+                    return "User loged in successfully";
+                }
+                return "Password is incorrect";
+            }
+            return "This user does not exist";
         }
-                 
-        
 
         public async Task RegisterAsync(User user)
         {
