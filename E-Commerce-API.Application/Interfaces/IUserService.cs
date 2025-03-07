@@ -16,6 +16,6 @@ namespace E_Commerce_API.Application.Interfaces
 
         Task UpdateAsync(int Id, User user);
 
-        Task LoginAsync(User user);
+        Task<string> LoginAsync(string UserName, string Password);
     }
 }
