@@ -33,6 +33,12 @@ namespace E_Commerce_API.Application.Services
             return _orderDetailsRepository.GetAllAsync();
         }
 
+        public async Task<OrderDetails> GetByIdAsync(int id)
+        {
+            var result = await _orderDetailsRepository.GetFirstOrDefaultAsync(x=> x.Id == id);
+            return result;
+        }
+
         public async Task UpdateOrderDetailsAsync(int Id, OrderDetails orderDetails)
         {
             var result = await _orderDetailsRepository.GetFirstOrDefaultAsync(x=>x.Id == Id);

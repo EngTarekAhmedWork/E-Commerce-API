@@ -35,6 +35,12 @@ namespace E_Commerce_API.Application.Services
             return await _orderRepository.GetAllAsync();
         }
 
+        public async Task<Order> GetByIdAsync(int id)
+        {
+            var result = await _orderRepository.GetFirstOrDefaultAsync(x=> x.Id == id);
+            return result;
+        }
+
         public async Task UpdateOrderAsync(int Id, Order order)
         {
             var result = await _orderRepository.GetFirstOrDefaultAsync(x => x.Id == Id);

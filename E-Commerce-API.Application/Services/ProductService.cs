@@ -36,9 +36,10 @@ namespace E_Commerce_API.Application.Services
             return await _productRepository.GetAllAsync();
         }
 
-        public Task<Product> GetByIdAsync(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _productRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            return result;
         }
 
         public async Task UpdateProductAsync(Product product, int Id)
