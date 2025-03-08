@@ -18,6 +18,7 @@ namespace E_Commerce_API.Core.Interfaces
 
         // After Modification:
         Task<IEnumerable<Product>> GetAllProductAsync();
+        Task<Product> GetByIdAsync(int id);
         Task CreateProductAsync(Product product);
         Task UpdateProductAsync(Product product, int Id);
         Task DeleteProductAsync(int Id);

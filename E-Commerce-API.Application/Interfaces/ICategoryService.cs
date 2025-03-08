@@ -10,7 +10,10 @@ namespace E_Commerce_API.Core.Interfaces
     public interface ICategoryService
     {
         Task<IEnumerable<Category>> GetAllCategoryAsync();
+
+        Task<Category> GetByIdAsync(int Id);
         Task CreateCategoryAsync(Category category);
+
         Task DeleteCategoryAsync(int Id);
         Task UpdateCategoryAsync(int Id, Category category);
     }
