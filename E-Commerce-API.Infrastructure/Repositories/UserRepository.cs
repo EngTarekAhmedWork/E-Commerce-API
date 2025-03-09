@@ -6,7 +6,9 @@ namespace E_Commerce_API.Core.Interfaces;
 
 public class UserRepository : GenericRepository<User>, IUserRepository
 {
+    private readonly ApplicationDbContex _context;
     public UserRepository(ApplicationDbContex context) : base(context)
     {
+        _context = context;
     }
 }

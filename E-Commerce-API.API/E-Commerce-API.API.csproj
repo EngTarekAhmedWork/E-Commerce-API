@@ -21,11 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Middlewares\" />
-    <Folder Include="DependencyInjection\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\E-Commerce-API.Core\E-Commerce-API.Core.csproj" />
     <ProjectReference Include="..\E-Commerce-API.Application\E-Commerce-API.Application.csproj" />
     <ProjectReference Include="..\E-Commerce-API.Infrastructure\E-Commerce-API.Infrastructure.csproj" />

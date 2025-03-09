@@ -11,33 +11,33 @@ namespace E_Commerce_API.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public UserService(IUserRepository userRepository)
+        public UserService(IUnitOfWork unitOfWork)
         {
-            _userRepository = userRepository;
+            _unitOfWork = unitOfWork;
         }
         public async Task DeleteAsync(int id)
         {
-            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == id);
-            await _userRepository.DeleteAsync(result);
+            var result = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Id == id);
+            await _unitOfWork.User.DeleteAsync(result);
         }
 
         public async Task<IEnumerable<User>> GetAllUsersAsync()
         {
-            return await _userRepository.GetAllAsync();
+            return await _unitOfWork.User.GetAllAsync();
         }
 
         public async Task<User> GetByIdAsync(int id)
         {
-            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == id);
+            var result = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
 
         #region Old Login
         //public async Task LoginAsync(User user)
         //{
-        //    var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x=> x.UserName == user.UserName && x.Password == user.Password);
+        //    var LoginUser = await _unitOfWork.User.GetFirstOrDefaultAsync(x=> x.UserName == user.UserName && x.Password == user.Password);
         //    if (LoginUser.UserName != user.UserName && LoginUser.Password != user.Password) 
         //    {
         //        Console.Write("User Or Password Incorrect");
@@ -50,7 +50,7 @@ namespace E_Commerce_API.Application.Services
         // New Login
         public async Task<string> LoginAsync(string UserName, string Password)
         {
-            var LoginUser = await _userRepository.GetFirstOrDefaultAsync(x => x.UserName == UserName);
+            var LoginUser = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.UserName == UserName);
             if (LoginUser != null)
             {
                 if ( LoginUser.Password == Password)
@@ -65,12 +65,12 @@ namespace E_Commerce_API.Application.Services
 
         public async Task RegisterAsync(User user)
         {
-            await _userRepository.AddAsync(user);
+            await _unitOfWork.User.AddAsync(user);
         }
 
         public async Task UpdateAsync(int Id, User user)
         {
-            var result = await _userRepository.GetFirstOrDefaultAsync(x => x.Id == Id);
+            var result = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Id == Id);
             result.UserName = user.UserName;
             result.Email = user.Email;
             result.Password = user.Password;
@@ -78,7 +78,7 @@ namespace E_Commerce_API.Application.Services
             result.BirthDay = user.BirthDay;
             result.Address = user.Address;
             result.Role = user.Role;
-            await _userRepository.UpdateAsync(result);
+            await _unitOfWork.User.UpdateAsync(result);
         }
     }
 }

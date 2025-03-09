@@ -6,7 +6,9 @@ namespace E_Commerce_API.Core.Interfaces;
 
 public class CategoryRepository : GenericRepository<Category>, ICategoryRepository
 {
+    private readonly ApplicationDbContex _context;
     public CategoryRepository(ApplicationDbContex context) : base(context)
     {
+        _context = context;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce_API.Application.Interfaces;
 using E_Commerce_API.Core.DTOs;
 using E_Commerce_API.Core.Entities;
 using E_Commerce_API.Core.Interfaces;
@@ -12,11 +13,13 @@ namespace E_Commerce_API.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUserService _userService;
         private readonly IMapper _mapper;
 
-        public UserController(IUnitOfWork unitOfWork , IMapper mapper)
+        public UserController(IUnitOfWork unitOfWork , IMapper mapper, IUserService userService)
         {
             _unitOfWork = unitOfWork;
+            _userService = userService;
             _mapper = mapper;
         }
 
@@ -24,7 +27,7 @@ namespace E_Commerce_API.API.Controllers
 
         public async Task<IActionResult> GetAllAsync() 
         {
-            return Ok(await _unitOfWork.User.GetAllAsync());
+            return Ok(await _userService.GetAllUsersAsync());
         }
 
         [HttpPost]
@@ -32,7 +35,7 @@ namespace E_Commerce_API.API.Controllers
         public async Task<IActionResult> RegisterAsync(UserDto userDto) 
         {
             var user = _mapper.Map<User>(userDto);
-            await _unitOfWork.User.AddAsync(user);
+            await _userService.RegisterAsync(user);
             await _unitOfWork.CompleteAsync();
             return Ok(user);
         }
@@ -41,14 +44,18 @@ namespace E_Commerce_API.API.Controllers
         [Route("Login")]
         public async Task<IActionResult> LoginAsync(LoginUserDto userDto) 
         {
-            var user = new User();
+            //var user = new User();
            
-            if (userDto.Email != user.Email && userDto.Password != user.Password) 
-            {
-                return BadRequest("Email Or Password Incorrect");
-            }
+            //if (userDto.Email != user.Email && userDto.Password != user.Password) 
+            //{
+            //    return BadRequest("Email Or Password Incorrect");
+            //}
              
-            return Ok($"Login Sccussful! {userDto.Email}");
+            //return Ok($"Login Sccussful! {userDto.Email}");
+
+
+            var res = _userService.LoginAsync(userDto.Email, userDto.Password);
+            return Ok(res);
         }
 
         [HttpDelete]
@@ -56,12 +63,12 @@ namespace E_Commerce_API.API.Controllers
 
         public async Task<IActionResult> DeleteAsync(int Id) 
         {
-            var user = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Id == Id);
+            var user = await _userService.GetByIdAsync(Id);
             if (user == null) 
             {
                 return BadRequest($"Not Found User With ID: {Id}");
             }
-            await _unitOfWork.User.DeleteAsync(user);
+            await _userService.DeleteAsync(Id);
             await _unitOfWork.CompleteAsync();
             return Ok("Deleted User Done!");    
         }

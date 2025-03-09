@@ -6,7 +6,9 @@ namespace E_Commerce_API.Core.Interfaces;
 
 public class OrderDetailsRepository : GenericRepository<OrderDetails>, IOrderDetailsRepository
 {
+    private readonly ApplicationDbContex _context;
     public OrderDetailsRepository(ApplicationDbContex context) : base(context)
     {
+        _context = context;
     }
 }
