@@ -9,6 +9,12 @@ namespace E_Commerce_API.API.Mapping
         public AutoMapperProfile()
         {
             CreateMap<CategoryDto,Category>().ReverseMap();
+            CreateMap<UpdateCategoryDto, Category>().ReverseMap();
+            CreateMap<ProductDTO, Product>().ReverseMap();
+            CreateMap<UpdateProductDto, Product>().ReverseMap();
+            CreateMap<UserDto, User>().ReverseMap();
+            CreateMap<LoginUserDto, User>().ReverseMap();
+
             
         }
     }
