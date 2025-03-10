@@ -48,9 +48,9 @@ namespace E_Commerce_API.Application.Services
         #endregion
 
         // New Login
-        public async Task<string> LoginAsync(string UserName, string Password)
+        public async Task<string> LoginAsync(string UserEmail, string Password)
         {
-            var LoginUser = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.UserName == UserName);
+            var LoginUser = await _unitOfWork.User.GetFirstOrDefaultAsync(x => x.Email == UserEmail);
             if (LoginUser != null)
             {
                 if ( LoginUser.Password == Password)

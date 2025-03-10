@@ -8,6 +8,7 @@ namespace E_Commerce_API.Core.DTOs
 {
     public record LoginUserDto
     {
+        
         public string Email { get; set; }
         public string Password { get; set; }
     }

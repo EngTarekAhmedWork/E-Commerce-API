@@ -54,7 +54,7 @@ namespace E_Commerce_API.API.Controllers
             //return Ok($"Login Sccussful! {userDto.Email}");
 
 
-            var res = _userService.LoginAsync(userDto.Email, userDto.Password);
+            var res = await _userService.LoginAsync(userDto.Email, userDto.Password);
             return Ok(res);
         }
 
