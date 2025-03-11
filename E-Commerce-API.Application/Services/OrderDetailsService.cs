@@ -36,7 +36,6 @@ public class OrderDetailsService : IOrderDetailsService
     public async Task UpdateOrderDetailsAsync(int Id, OrderDetails orderDetails)
     {
         var result = await _unitOfWork.OrderDetails.GetFirstOrDefaultAsync(x=>x.Id == Id);
-        result.Order = orderDetails.Order;
         result.Quantity = orderDetails.Quantity;
         result.OrderId = orderDetails.OrderId;
         result.Price = orderDetails.Price;

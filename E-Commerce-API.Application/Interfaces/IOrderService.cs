@@ -5,14 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce_API.Core.Interfaces
+namespace E_Commerce_API.Application.Services;
+
+public interface IOrderService 
 {
-    public interface IOrderService 
-    {
-        Task<IEnumerable<Order>> GetAllOrderAsync();
-        Task<Order> GetByIdAsync(int id);
-        Task CreateOrderAsync(Order order);
-        Task DeleteOrderAsync(int Id);
-        Task UpdateOrderAsync(int Id,Order order);
-    }
+    Task<IEnumerable<Order>> GetAllOrderAsync();
+    Task<Order> GetByIdAsync(int id);
+    Task<Order> CreateOrderAsync(Order order);
+    Task DeleteOrderAsync(int Id);
+    Task UpdateOrderAsync(int Id,Order order);
 }

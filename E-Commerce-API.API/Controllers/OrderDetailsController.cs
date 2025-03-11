@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce_API.Application.Services;
 using E_Commerce_API.Core.DTOs;
 using E_Commerce_API.Core.Entities;
 using E_Commerce_API.Core.Interfaces;
@@ -12,19 +13,23 @@ namespace E_Commerce_API.API.Controllers
     public class OrderDetailsController : ControllerBase
     {
         private readonly IUnitOfWork _work;
+        private readonly IOrderService _orderService;
+        private readonly IOrderDetailsService _orderDetailsService;
         private readonly IMapper _mapper;
 
-        public OrderDetailsController(IUnitOfWork work, IMapper mapper)
+        public OrderDetailsController(IUnitOfWork work, IMapper mapper, IOrderDetailsService orderDetailsService, IOrderService orderService)
         {
             _work = work;
             _mapper = mapper;
+            _orderService = orderService;
+            _orderDetailsService = orderDetailsService;
         }
 
         [HttpGet]
 
         public async Task<IActionResult> GetAllAsync()
         {
-            return Ok(await _work.OrderDetails.GetAllAsync());
+            return Ok(await _orderService.GetAllOrderAsync());
         }
 
         [HttpGet]
@@ -32,7 +37,7 @@ namespace E_Commerce_API.API.Controllers
 
         public async Task<IActionResult> GetByIdAsync(int Id)
         {
-            var result = await _work.OrderDetails.GetFirstOrDefaultAsync(x => x.Id == Id);
+            var result = await _orderService.GetByIdAsync(Id);
             if (result == null)
             {
                 return BadRequest($"Not Found With ID: {Id}");
@@ -40,24 +45,20 @@ namespace E_Commerce_API.API.Controllers
             return Ok(result);
         }
         [HttpPost]
-        [Route("OrderDetails")]
-        public async Task<IActionResult> CreateOrderDetailsAsync(OrderDetailsDto orderDetailsDto)
-        {
-            var existOrderDetails = _mapper.Map<OrderDetails>(orderDetailsDto);
-            await _work.OrderDetails.AddAsync(existOrderDetails);
-            await _work.CompleteAsync();
-            return Ok(existOrderDetails);
-        }
-
-        [HttpPost]
         [Route("Order")]
-
-        public async Task<IActionResult> CreateOrderAsync(OrderDtos orderDtos)
+        public async Task<IActionResult> CreateOrderAsync(OrderDtos orderDto)
         {
-            var order = _mapper.Map<Order>(orderDtos);
-            await _work.Order.AddAsync(order);
+            var newOrderdb = _mapper.Map<Order>(orderDto);
+            var newOrder = await _orderService.CreateOrderAsync(newOrderdb);
+            foreach (var item in orderDto.OrderDetails)
+            {
+                var newOrderdetails = _mapper.Map<OrderDetails>(item);
+                newOrderdetails.OrderId = newOrder.Id;
+                await _orderDetailsService.CreateOrderDetailsAsync(newOrderdetails);
+            }
             await _work.CompleteAsync();
-            return Ok(order);
+            newOrder = await _work.Order.GetFirstOrDefaultAsync(o => o.Id == newOrder.Id, "Details");
+            return Ok(newOrder);
         }
     }
 }

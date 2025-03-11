@@ -13,7 +13,7 @@ public interface IGenericRepository<T> where T : class
 
     Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>>? predicate = null, string? includeEntities = null);
     Task<T?> GetFirstOrDefaultAsync(Expression<Func<T, bool>>? predicate = null, string? includeEntities = null);
-    Task AddAsync(T item);
+    Task<T> AddAsync(T item);
     Task UpdateAsync(T item);
     Task DeleteAsync(T item);
     Task DeleteRangeAsync(IEnumerable<T> items);

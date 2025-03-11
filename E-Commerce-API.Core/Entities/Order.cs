@@ -8,4 +8,5 @@ public class Order
     public int OrderPrice { get; set; }
     public int UserId { get; set; }
     public User? User { get; set; }
+    public IEnumerable<OrderDetails>? Details { get; set; }
 }

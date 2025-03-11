@@ -14,9 +14,11 @@ public class OrderService : IOrderService
 
     }
 
-    public async Task CreateOrderAsync(Order order)
+    public async Task<Order> CreateOrderAsync(Order order)
     {
         await _unitOfWork.Order.AddAsync(order);
+        await _unitOfWork.CompleteAsync();
+        return order;
     }
 
     public async Task DeleteOrderAsync(int Id)

@@ -109,9 +109,10 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return await query.FirstOrDefaultAsync();
     }
 
-    public async Task AddAsync(T item)
+    public async Task<T> AddAsync(T item)
     {
         await _dbSet.AddAsync(item);
+        return item;
     }
 
     public async Task UpdateAsync(T item)
