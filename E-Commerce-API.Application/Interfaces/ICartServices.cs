@@ -11,7 +11,7 @@ namespace E_Commerce_API.Application.Interfaces
     {
         Task<IEnumerable<Cart>> GetAllAsync();
         Task<Cart> GetByIdAsync(int id);
-
+        Task<Cart> GetCartItemAsync(int UserId, int ProductId);
         Task CreateAsync(Cart cart);
         
         Task UpdateAsync(Cart cart , int Id);

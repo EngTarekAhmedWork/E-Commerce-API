@@ -41,6 +41,12 @@ namespace E_Commerce_API.Application.Services
             return result;
         }
 
+        public async Task<Cart> GetCartItemAsync(int UserId, int ProductId)
+        {
+            var result = await _work.Cart.GetFirstOrDefaultAsync(x => x.UserId == UserId && x.ProductId==ProductId);
+            return result;
+        }
+
         public async Task UpdateAsync(Cart cart , int Id)
         {
             var result = await _work.Cart.GetFirstOrDefaultAsync(x=> x.Id == Id);

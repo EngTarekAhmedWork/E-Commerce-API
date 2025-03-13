@@ -49,7 +49,7 @@ namespace E_Commerce_API.API.Controllers
         public async Task<IActionResult> CreateOrderAsync(OrderDtos orderDto)
         {
             var newOrderdb = _mapper.Map<Order>(orderDto);
-            var newOrder = _orderService.CreateOrderAsync(newOrderdb);
+            var newOrder = await _orderService.CreateOrderAsync(newOrderdb);
             foreach (var item in orderDto.OrderDetails)
             {
                 var newOrderdetails = _mapper.Map<OrderDetails>(item);
@@ -57,7 +57,7 @@ namespace E_Commerce_API.API.Controllers
                 await _orderDetailsService.CreateOrderDetailsAsync(newOrderdetails);
             }
             await _work.CompleteAsync();
-            newOrder =  _work.Order.GetFirstOrDefaultAsync(o => o.Id == newOrder.Id, "Details");
+            newOrder =  await _work.Order.GetFirstOrDefaultAsync(o => o.Id == newOrder.Id, "Details");
             return Ok(newOrder);
         }
     }
