@@ -20,6 +20,7 @@ public class CategoryService : ICategoryService
     {
         var result = await _unitOfWork.Category.GetFirstOrDefaultAsync(x => x.Id == Id);
         await _unitOfWork.Category.DeleteAsync(result);
+        
     }
 
     public async Task<IEnumerable<Category>> GetAllCategoryAsync()

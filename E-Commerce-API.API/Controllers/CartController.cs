@@ -29,12 +29,11 @@ namespace E_Commerce_API.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCartAsync(CartDto cartDto) 
         {
-            var cart = _mapper.Map<Cart>(cartDto);
-            if (cart.Quntity != null) 
+            if (cartDto.Quntity > 0) 
             {
-                cart.Quntity += cart.Quntity;
+                cartDto.Quntity += cartDto.Quntity;
             }
-
+            var cart = _mapper.Map<Cart>(cartDto);
             await _work.Cart.AddAsync(cart);
             return Ok(cart);
         }
