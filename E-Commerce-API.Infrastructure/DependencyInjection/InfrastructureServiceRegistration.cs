@@ -14,6 +14,7 @@ public static class InfrastructureServiceRegistration
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddDbContext<ApplicationDbContex>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+        services.AddScoped<ICartRepository, CartRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
         services.AddScoped<IOrderDetailsRepository, OrderDetailsRepository>();
         services.AddScoped<IOrderRepository, OrderRepository>();

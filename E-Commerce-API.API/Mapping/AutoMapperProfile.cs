@@ -15,7 +15,8 @@ namespace E_Commerce_API.API.Mapping
             CreateMap<UserDto, User>().ReverseMap();
             CreateMap<LoginUserDto, User>().ReverseMap();
             CreateMap<OrderDetailsDto, OrderDetails>().ReverseMap();
-            CreateMap<OrderDtos , Order>().ReverseMap();
+            CreateMap<OrderDtos, Order>().ReverseMap();
+            CreateMap<CartDto, Cart>().ReverseMap();
 
             
         }

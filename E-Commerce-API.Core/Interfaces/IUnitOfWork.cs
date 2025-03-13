@@ -8,5 +8,7 @@ public interface IUnitOfWork : IDisposable
     IOrderDetailsRepository OrderDetails { get; }
     IUserRepository User { get; }
 
+    ICartRepository Cart { get; }
+
     Task<int> CompleteAsync();
 }

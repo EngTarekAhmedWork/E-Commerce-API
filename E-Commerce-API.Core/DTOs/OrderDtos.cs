@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce_API.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,7 @@ namespace E_Commerce_API.Core.DTOs
         public int OrderPrice { get; set; }
         public IEnumerable<OrderDetailsDto> OrderDetails { get; set; }
         public int UserId { get; set; }
+
+        
     }
 }

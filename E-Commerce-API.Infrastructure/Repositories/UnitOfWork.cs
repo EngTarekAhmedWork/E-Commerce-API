@@ -14,6 +14,9 @@ public class UnitOfWork : IUnitOfWork
     public IOrderDetailsRepository OrderDetails { get; }
     public IUserRepository User { get; }
 
+    public ICartRepository Cart { get; }
+
+
     public UnitOfWork(ApplicationDbContex context)
     {
         _context = context;
@@ -22,6 +25,7 @@ public class UnitOfWork : IUnitOfWork
         Order = new OrderRepository(context);
         OrderDetails = new OrderDetailsRepository(context);
         User = new UserRepository(context);
+        Cart = new CartRepository(context);
     }
 
     public async Task<int> CompleteAsync()

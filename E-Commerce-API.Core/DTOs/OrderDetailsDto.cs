@@ -12,6 +12,7 @@ namespace E_Commerce_API.Core.DTOs
         public int TotalPrice { get; set; }
         public int ProductId { get; set; }
 
+
         //public OrderDtos OrderDtos { get; set; }
     }
 }
