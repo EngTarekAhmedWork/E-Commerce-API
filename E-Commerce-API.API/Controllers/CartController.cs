@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using E_Commerce_API.Application.Interfaces;
 using E_Commerce_API.Core.DTOs;
 using E_Commerce_API.Core.Entities;
 using E_Commerce_API.Core.Interfaces;
@@ -12,28 +13,31 @@ namespace E_Commerce_API.API.Controllers
     public class CartController : ControllerBase
     {
         private readonly IUnitOfWork _work;
+        private readonly ICartServices _cartServices;
         private readonly IMapper _mapper;
 
-        public CartController(IUnitOfWork work,IMapper mapper)
+        public CartController(IUnitOfWork work,IMapper mapper, ICartServices cartServices)
         {
             _work = work;
+            _cartServices = cartServices;
             _mapper = mapper;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllAsync() 
         {
-        return Ok(await _work.Cart.GetAllAsync());  
+        return Ok(await _cartServices.GetAllAsync());  
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddToCartAsync(CartDto cartDto) 
+        public async Task<IActionResult> AddToCartAsync(CartDto cartDto)
         {
-            if (cartDto.Quntity > 0) 
-            {
-                cartDto.Quntity += cartDto.Quntity;
-            }
             var cart = _mapper.Map<Cart>(cartDto);
+            if (cart.Quntity != null) 
+            {
+                cart.Quntity += cart.Quntity;
+            }
+
             await _work.Cart.AddAsync(cart);
             return Ok(cart);
         }

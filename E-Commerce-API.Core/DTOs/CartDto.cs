@@ -8,7 +8,7 @@ namespace E_Commerce_API.Core.DTOs
 {
    public class CartDto
     {
-        
+        public int Id { get; set; }
         public int Price { get; set; }
         public int Quntity { get; set; }
         public int UserId { get; set; }
